@@ -28,6 +28,8 @@ public class OrderController {
         List<Member> members= memberService.findMembers();
         List<Item> items = itemService.findItems();
 
+
+
         model.addAttribute("members",members);
         model.addAttribute("items",items);
 
