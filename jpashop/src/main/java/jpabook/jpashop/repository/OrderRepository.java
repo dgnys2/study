@@ -20,6 +20,7 @@ public class OrderRepository {
 
     private final EntityManager em;
 
+    Boolean
     public void save(Order order) {
         em.persist(order);
     }
@@ -28,7 +29,7 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
-    public List<Order> findAll(OrderSearch orderSearch) {
+    public List<Order> findAll(OrderSearch orderSearch) { 
         return em.createQuery("select o from Order o join o.member m" + " where o.status = :status" + " and m.name like :name", Order.class)
                 .setParameter("status", orderSearch.getOrderStatus())
                 .setParameter("name", orderSearch.getMemberName())
@@ -39,8 +40,11 @@ public class OrderRepository {
     //    public List<Order> findAllByCriteria(OrderSearch order)
     public List<Order> findAllByCriteria(OrderSearch orderSearch) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
+
         CriteriaQuery<Order> cq = cb.createQuery(Order.class);
+
         Root<Order> o = cq.from(Order.class);
+
         Join<Order, Member> m = o.join("member", JoinType.INNER); //회원과 조인
         List<Predicate> criteria = new ArrayList<>();
         //주문 상태 검색
